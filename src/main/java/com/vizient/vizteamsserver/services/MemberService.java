@@ -27,4 +27,8 @@ public class MemberService {
     public List<Member> getAllMembers() {
         return memberRepository.findAll();
     }
+
+    public Member getMemberById(Long id) {
+        return memberRepository.getOne(id);
+    }
 }

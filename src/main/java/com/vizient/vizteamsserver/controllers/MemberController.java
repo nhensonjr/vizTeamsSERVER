@@ -1,6 +1,5 @@
 package com.vizient.vizteamsserver.controllers;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.vizient.vizteamsserver.interfaces.MemberInterface;
 import com.vizient.vizteamsserver.models.Member;
 import com.vizient.vizteamsserver.requests.MemberRequest;
@@ -10,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -31,11 +31,25 @@ public class MemberController implements MemberInterface {
     }
 
     @Override
-    public ResponseEntity<?> getAllMembers() throws JsonProcessingException {
+    public ResponseEntity<?> getAllMembers() {
         try {
             return new ResponseEntity<>(memberService.getAllMembers(), HttpStatus.OK);
         } catch (Exception exception) {
             return new ResponseEntity<>("Failed to find members: " + exception.getMessage(), HttpStatus.BAD_REQUEST);
         }
+    }
+
+    @Override
+    public ResponseEntity<?> getMemberById(@PathVariable Long id) {
+        try {
+            Member memberById = memberService.getMemberById(id);
+            if (memberById.getId() != null) {
+                return new ResponseEntity<>(memberById, HttpStatus.OK);
+            }
+        } catch (Exception exception) {
+            return new ResponseEntity<>(exception.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+
+        return new ResponseEntity<>("No member found with id: " + id, HttpStatus.NO_CONTENT);
     }
 }
