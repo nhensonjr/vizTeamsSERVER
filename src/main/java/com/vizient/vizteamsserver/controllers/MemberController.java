@@ -75,4 +75,18 @@ public class MemberController implements MemberInterface {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
+
+    @Override
+    public ResponseEntity<?> deleteMember(@PathVariable Long id) {
+        try {
+            String message = memberService.deleteMember(id);
+            if (message.equals("Member deleted")) {
+                return new ResponseEntity<>(message, HttpStatus.ACCEPTED);
+            } else {
+                return new ResponseEntity<>(message, HttpStatus.NO_CONTENT);
+            }
+        } catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
 }

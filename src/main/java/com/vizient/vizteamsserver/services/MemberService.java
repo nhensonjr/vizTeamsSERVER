@@ -64,4 +64,14 @@ public class MemberService {
         memberResponse.setTitle(member.getTitle());
         return memberResponse;
     }
+
+    public String deleteMember(Long id) {
+        Member member = memberRepository.getOne(id);
+        if (member != null) {
+            memberRepository.delete(member);
+            return "Member deleted";
+        } else {
+            return "No member found";
+        }
+    }
 }
