@@ -39,6 +39,15 @@ public class TeamController implements TeamInterface {
     }
 
     @Override
+    public ResponseEntity<?> updateTeam(Team team) {
+        try {
+            return new ResponseEntity<>(teamService.updateTeam(team), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @Override
     public ResponseEntity<?> deleteTeam(Long id) {
         try {
             String message = teamService.deleteTeam(id);

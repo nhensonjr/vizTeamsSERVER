@@ -1,5 +1,6 @@
 package com.vizient.vizteamsserver.interfaces;
 
+import com.vizient.vizteamsserver.models.Team;
 import com.vizient.vizteamsserver.requests.TeamRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,6 +12,9 @@ public interface TeamInterface {
     @GetMapping(path = "team")
     ResponseEntity<?> getAllTeams();
 
-    @DeleteMapping
+    @PutMapping(path = "team/{id}")
+    ResponseEntity<?> updateTeam(@RequestBody Team team);
+
+    @DeleteMapping(path = "team/{id}")
     ResponseEntity<?> deleteTeam(@PathVariable Long id);
 }
