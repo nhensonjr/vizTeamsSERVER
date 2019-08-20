@@ -12,7 +12,7 @@ public interface TeamInterface {
     @GetMapping(path = "team")
     ResponseEntity<?> getAllTeams();
 
-    @PutMapping(path = "team/{id}")
+    @PutMapping(path = "team")
     ResponseEntity<?> updateTeam(@RequestBody Team team);
 
     @DeleteMapping(path = "team/{id}")

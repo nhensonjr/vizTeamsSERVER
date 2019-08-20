@@ -46,8 +46,10 @@ public class MemberService {
         memberById.setPathToPhoto(memberRequest.getPathToPhoto());
         memberById.setTitle(memberRequest.getTitle());
 
-        Team team = teamRepository.getOne(memberRequest.getTeam());
-        memberById.setTeam(team);
+        if (memberRequest.getTeam() != null) {
+            Team team = teamRepository.getOne(memberRequest.getTeam());
+            memberById.setTeam(team);
+        }
 
         Member savedMember = memberRepository.save(memberById);
         return generateMemberResponseFromMember(savedMember);
@@ -57,7 +59,9 @@ public class MemberService {
     public MemberResponse generateMemberResponseFromMember(Member member) {
         MemberResponse memberResponse = new MemberResponse();
         memberResponse.setId(member.getId());
-        memberResponse.setTeamId(member.getTeam().getId());
+        if (member.getTeam() != null) {
+            memberResponse.setTeamId(member.getTeam().getId());
+        }
         memberResponse.setFirstName(member.getFirstName());
         memberResponse.setLastName(member.getLastName());
         memberResponse.setPathToPhoto(member.getPathToPhoto());
