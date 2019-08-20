@@ -26,4 +26,14 @@ public class TeamService {
         teamRepository.save(team);
         return team;
     }
+
+    public String deleteTeam(Long id) {
+        Team team = teamRepository.getOne(id);
+        if (team != null) {
+            teamRepository.delete(team);
+            return "Team Deleted";
+        } else {
+            return "No Team Found";
+        }
+    }
 }

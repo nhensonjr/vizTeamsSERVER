@@ -37,4 +37,18 @@ public class TeamController implements TeamInterface {
             return new ResponseEntity<>(e, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @Override
+    public ResponseEntity<?> deleteTeam(Long id) {
+        try {
+            String message = teamService.deleteTeam(id);
+            if (message.equals("Team Deleted")) {
+                return new ResponseEntity<>(message, HttpStatus.ACCEPTED);
+            } else {
+                return new ResponseEntity<>(message, HttpStatus.NO_CONTENT);
+            }
+        } catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
 }
