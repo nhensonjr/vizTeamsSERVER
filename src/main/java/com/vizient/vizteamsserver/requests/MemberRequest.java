@@ -12,4 +12,5 @@ public class MemberRequest {
     private String lastName;
     private String title;
     private String pathToPhoto;
+    private Long team;
 }

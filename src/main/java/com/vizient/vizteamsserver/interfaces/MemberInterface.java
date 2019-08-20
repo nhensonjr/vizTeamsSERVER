@@ -2,10 +2,7 @@ package com.vizient.vizteamsserver.interfaces;
 
 import com.vizient.vizteamsserver.requests.MemberRequest;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
 
 public interface MemberInterface {
     @PostMapping(path = "member")
@@ -16,4 +13,7 @@ public interface MemberInterface {
 
     @GetMapping(path = "member/{id}")
     ResponseEntity<?> getMemberById(@PathVariable Long id);
+
+    @PutMapping(path = "member/{id}")
+    ResponseEntity<?> updateMember(@PathVariable Long id, @RequestBody MemberRequest memberRequest);
 }

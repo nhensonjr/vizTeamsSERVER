@@ -1,11 +1,1 @@
-CREATE TABLE member (
-    id INT NOT NULL identity(1, 1),
-    first_name VARCHAR(255) NOT NULL,
-    last_name VARCHAR(255) NOT NULL,
-    title VARCHAR(255) NOT NULL,
-    path_to_photo VARCHAR(255) NOT NULL,
-    modified_ts DATETIMEOFFSET,
-    create_ts DATETIMEOFFSET CONSTRAINT DF_member_create_ts DEFAULT (GETUTCDATE()),
-    CONSTRAINT PK__member PRIMARY KEY (id)
-);
-GO
+alter table member add team_id INT CONSTRAINT FK_member_to_team FOREIGN KEY (team_id) REFERENCES team(id)

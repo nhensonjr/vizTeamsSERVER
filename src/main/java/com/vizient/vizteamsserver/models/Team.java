@@ -1,15 +1,9 @@
 package com.vizient.vizteamsserver.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import java.time.OffsetDateTime;
+import javax.persistence.*;
 import java.util.List;
 
 @Entity
@@ -18,6 +12,8 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+@EqualsAndHashCode(exclude = {"members"})
+@ToString(exclude = {"members"})
 public class Team {
 
     @Id
@@ -26,7 +22,7 @@ public class Team {
 
     private String name;
     private String description;
-    private OffsetDateTime createdOn;
-    private OffsetDateTime endedOn;
+
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "team")
     private List<Member> members;
 }

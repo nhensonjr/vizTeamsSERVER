@@ -1,14 +1,10 @@
 package com.vizient.vizteamsserver.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
@@ -17,6 +13,8 @@ import java.io.Serializable;
 @AllArgsConstructor
 @Builder
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+@EqualsAndHashCode(callSuper = false, exclude = "team")
+@ToString(exclude = {"team"})
 public class Member {
 
     @Id
@@ -27,4 +25,9 @@ public class Member {
     private String lastName;
     private String title;
     private String pathToPhoto;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "team_id")
+    @JsonIgnore
+    private Team team;
 }
