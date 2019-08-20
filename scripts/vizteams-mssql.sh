@@ -10,7 +10,7 @@ docker run \
     --name vizteams \
     -d \
     --restart unless-stopped \
-    microsoft/mssql-server-linux:2017-latest
+    mcr.microsoft.com/mssql/server:2017-latest-ubuntu
 
 sleep 15
 docker cp vizteamssetup.sql vizteams:/vizteamssetup.sql
