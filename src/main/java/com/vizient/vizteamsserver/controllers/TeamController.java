@@ -1,8 +1,10 @@
 package com.vizient.vizteamsserver.controllers;
 
 import com.vizient.vizteamsserver.interfaces.TeamInterface;
+import com.vizient.vizteamsserver.models.MemberHistory;
 import com.vizient.vizteamsserver.models.Team;
 import com.vizient.vizteamsserver.requests.TeamRequest;
+import com.vizient.vizteamsserver.services.MemberHistoryService;
 import com.vizient.vizteamsserver.services.TeamService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -12,12 +14,20 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 @CrossOrigin
 public class TeamController implements TeamInterface {
 
-    @Autowired
-    TeamService teamService;
+
+    private MemberHistoryService memberHistoryService;
+    private TeamService teamService;
+
+    public TeamController(TeamService teamService, MemberHistoryService memberHistoryService) {
+        this.teamService = teamService;
+        this.memberHistoryService = memberHistoryService;
+    }
 
     @Override
     public ResponseEntity<?> createTeam(@Validated @RequestBody TeamRequest teamRequest) {
@@ -50,6 +60,8 @@ public class TeamController implements TeamInterface {
     @Override
     public ResponseEntity<?> deleteTeam(Long id) {
         try {
+            List<MemberHistory> allByTeamId = memberHistoryService.getAllByTeamId(id);
+            memberHistoryService.deleteByTeamId(id);
             String message = teamService.deleteTeam(id);
             if (message.equals("Team Deleted")) {
                 return new ResponseEntity<>(message, HttpStatus.ACCEPTED);

@@ -21,8 +21,11 @@ import java.util.List;
 @CrossOrigin
 public class MemberController implements MemberInterface {
 
-    @Autowired
-    MemberService memberService;
+    private MemberService memberService;
+
+    public MemberController(MemberService memberService) {
+        this.memberService = memberService;
+    }
 
     @Override
     public ResponseEntity<?> createMember(@Validated @RequestBody MemberRequest request) {

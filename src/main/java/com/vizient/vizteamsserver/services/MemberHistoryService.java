@@ -4,7 +4,6 @@ import com.vizient.vizteamsserver.models.Member;
 import com.vizient.vizteamsserver.models.MemberHistory;
 import com.vizient.vizteamsserver.repositories.MemberHistoryRepository;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
@@ -18,6 +17,10 @@ public class MemberHistoryService {
 
     public MemberHistoryService(MemberHistoryRepository memberHistoryRepository) {
         this.memberHistoryRepository = memberHistoryRepository;
+    }
+
+    public List<MemberHistory> getAllByMemberId(Long id) {
+        return memberHistoryRepository.findAllByMemberId(id);
     }
 
     void addRecord(Member member) {
@@ -62,5 +65,14 @@ public class MemberHistoryService {
     void deleteByMemberId(Long id) {
         List<MemberHistory> allByMemberId = memberHistoryRepository.findAllByMemberId(id);
         memberHistoryRepository.deleteInBatch(allByMemberId);
+    }
+
+    public void deleteByTeamId(Long id) {
+        List<MemberHistory> memberHistoryList = memberHistoryRepository.findAllByTeamId(id);
+        memberHistoryRepository.deleteInBatch(memberHistoryList);
+    }
+
+    public List<MemberHistory> getAllByTeamId(Long id) {
+        return memberHistoryRepository.findAllByTeamId(id);
     }
 }

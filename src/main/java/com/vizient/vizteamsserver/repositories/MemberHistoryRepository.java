@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface MemberHistoryRepository extends JpaRepository<MemberHistory, Long> {
     public List<MemberHistory> findAllByMemberId(Long id);
+    public List<MemberHistory> findAllByTeamId(Long id);
 }
