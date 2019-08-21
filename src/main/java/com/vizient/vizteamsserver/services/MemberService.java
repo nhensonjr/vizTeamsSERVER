@@ -1,6 +1,7 @@
 package com.vizient.vizteamsserver.services;
 
 import com.vizient.vizteamsserver.models.Member;
+import com.vizient.vizteamsserver.models.MemberHistory;
 import com.vizient.vizteamsserver.models.Team;
 import com.vizient.vizteamsserver.repositories.MemberRepository;
 import com.vizient.vizteamsserver.repositories.TeamRepository;
@@ -20,6 +21,9 @@ public class MemberService {
     @Autowired
     TeamRepository teamRepository;
 
+    @Autowired
+    MemberHistoryService memberHistoryService;
+
     public MemberResponse generateMemberFromRequest(MemberRequest request) {
         Member member = new Member();
         member.setFirstName(request.getFirstName());
@@ -28,6 +32,8 @@ public class MemberService {
         member.setPathToPhoto(request.getPathToPhoto());
         member.setTeam(teamRepository.getOne(request.getTeam()));
         Member savedMember = memberRepository.save(member);
+
+        memberHistoryService.addRecord(member);
 
         return generateMemberResponseFromMember(savedMember);
     }
@@ -51,6 +57,8 @@ public class MemberService {
             memberById.setTeam(team);
         }
 
+        memberHistoryService.updateHistory(memberById);
+
         Member savedMember = memberRepository.save(memberById);
         return generateMemberResponseFromMember(savedMember);
 
@@ -70,6 +78,7 @@ public class MemberService {
     }
 
     public String deleteMember(Long id) {
+        memberHistoryService.deleteByMemberId(id);
         Member member = memberRepository.getOne(id);
         if (member != null) {
             memberRepository.delete(member);

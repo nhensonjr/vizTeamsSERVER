@@ -17,6 +17,6 @@ public interface MemberInterface {
     @PutMapping(path = "member/{id}")
     ResponseEntity<?> updateMember(@PathVariable Long id, @RequestBody MemberRequest memberRequest);
 
-    @DeleteMapping
+    @DeleteMapping(path = "member/{id}")
     ResponseEntity<?> deleteMember(@PathVariable Long id);
 }
