@@ -26,7 +26,7 @@ public class MemberHistoryService {
     void addRecord(Member member) {
         MemberHistory history = new MemberHistory();
         history.setMemberId(member.getId());
-        history.setTeamId(member.getTeam().getId());
+        history.setTeamId(member.getTeamId());
         history.setStartedOnTeam(OffsetDateTime.now(ZoneOffset.UTC));
         memberHistoryRepository.save(history);
     }
@@ -36,7 +36,7 @@ public class MemberHistoryService {
         List<MemberHistory> histories = memberHistoryRepository.findAllByMemberId(member.getId());
         List<MemberHistory> historiesWithNoLeftDate = histories.stream().filter(memberHistory -> memberHistory.getLeftTeam() == null).collect(Collectors.toList());
         List<MemberHistory> isRecentlyOffTeam = histories.stream().filter(memberHistory -> memberHistory.getLeftTeam() != null && memberHistory.getLeftTeam().plusHours(24).isAfter(now)).collect(Collectors.toList());
-        if (isRecentlyOffTeam.size() > 0 && member.getTeam().getId().equals(isRecentlyOffTeam.get(0).getTeamId())) {
+        if (isRecentlyOffTeam.size() > 0 && member.getTeamId().equals(isRecentlyOffTeam.get(0).getTeamId())) {
             isRecentlyOffTeam.get(0).setLeftTeam(null);
             memberHistoryRepository.save(isRecentlyOffTeam.get(0));
             memberHistoryRepository.deleteInBatch(historiesWithNoLeftDate);
@@ -44,7 +44,7 @@ public class MemberHistoryService {
         }
         if (historiesWithNoLeftDate.size() > 0) {
             MemberHistory recentHistory = historiesWithNoLeftDate.get(0);
-            if (recentHistory.getTeamId().equals(member.getTeam().getId())) {
+            if (recentHistory.getTeamId().equals(member.getTeamId())) {
                 return;
             }
 
@@ -53,7 +53,7 @@ public class MemberHistoryService {
                 memberHistoryRepository.save(recentHistory);
                 addRecord(member);
             } else {
-                recentHistory.setTeamId(member.getTeam().getId());
+                recentHistory.setTeamId(member.getTeamId());
                 recentHistory.setLeftTeam(null);
             }
         } else {

@@ -1,6 +1,5 @@
 package com.vizient.vizteamsserver.models;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 
@@ -13,8 +12,6 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-@EqualsAndHashCode(exclude = {"members"})
-@ToString(exclude = {"members"})
 public class Team {
 
     @Id
@@ -24,7 +21,6 @@ public class Team {
     private String name;
     private String description;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "team")
-    @JsonIgnore
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "teamId")
     private List<Member> members;
 }

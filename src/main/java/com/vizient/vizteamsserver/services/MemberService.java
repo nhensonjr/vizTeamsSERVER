@@ -30,7 +30,7 @@ public class MemberService {
         member.setLastName(request.getLastName());
         member.setTitle(request.getTitle());
         member.setPathToPhoto(request.getPathToPhoto());
-        member.setTeam(teamRepository.getOne(request.getTeam()));
+        member.setTeamId(request.getTeam());
         Member savedMember = memberRepository.save(member);
 
         memberHistoryService.addRecord(member);
@@ -53,8 +53,7 @@ public class MemberService {
         memberById.setTitle(memberRequest.getTitle());
 
         if (memberRequest.getTeam() != null) {
-            Team team = teamRepository.getOne(memberRequest.getTeam());
-            memberById.setTeam(team);
+            memberById.setTeamId(memberRequest.getTeam());
         }
 
         memberHistoryService.updateHistory(memberById);
@@ -67,8 +66,8 @@ public class MemberService {
     public MemberResponse generateMemberResponseFromMember(Member member) {
         MemberResponse memberResponse = new MemberResponse();
         memberResponse.setId(member.getId());
-        if (member.getTeam() != null) {
-            memberResponse.setTeamId(member.getTeam().getId());
+        if (member.getTeamId() != null) {
+            memberResponse.setTeamId(member.getTeamId());
         }
         memberResponse.setFirstName(member.getFirstName());
         memberResponse.setLastName(member.getLastName());

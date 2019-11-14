@@ -36,7 +36,7 @@ public class TeamService {
 
         if (team != null) {
             team.getMembers().forEach(member -> {
-                member.setTeam(null);
+                member.setTeamId(null);
             });
             teamRepository.delete(team);
             return "Team Deleted";

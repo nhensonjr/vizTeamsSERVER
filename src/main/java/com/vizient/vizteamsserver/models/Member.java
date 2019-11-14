@@ -13,8 +13,6 @@ import java.io.Serializable;
 @AllArgsConstructor
 @Builder
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-@EqualsAndHashCode(callSuper = false, exclude = "team")
-@ToString(exclude = {"team"})
 public class Member {
 
     @Id
@@ -26,8 +24,6 @@ public class Member {
     private String title;
     private String pathToPhoto;
 
-    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "team_id")
-    @JsonIgnore
-    private Team team;
+    private Long teamId;
 }
