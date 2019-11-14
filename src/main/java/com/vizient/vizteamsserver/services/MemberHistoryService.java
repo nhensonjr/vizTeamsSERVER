@@ -3,6 +3,7 @@ package com.vizient.vizteamsserver.services;
 import com.vizient.vizteamsserver.models.Member;
 import com.vizient.vizteamsserver.models.MemberHistory;
 import com.vizient.vizteamsserver.repositories.MemberHistoryRepository;
+import com.vizient.vizteamsserver.repositories.TeamRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.OffsetDateTime;
@@ -14,9 +15,14 @@ import java.util.stream.Collectors;
 public class MemberHistoryService {
 
     private MemberHistoryRepository memberHistoryRepository;
+    private TeamRepository teamRepository;
 
-    public MemberHistoryService(MemberHistoryRepository memberHistoryRepository) {
+    public MemberHistoryService(
+        MemberHistoryRepository memberHistoryRepository,
+        TeamRepository teamRepository
+    ) {
         this.memberHistoryRepository = memberHistoryRepository;
+        this.teamRepository = teamRepository;
     }
 
     public List<MemberHistory> getAllByMemberId(Long id) {
@@ -27,6 +33,7 @@ public class MemberHistoryService {
         MemberHistory history = new MemberHistory();
         history.setMemberId(member.getId());
         history.setTeamId(member.getTeamId());
+        history.setTeamName(teamRepository.getOne(member.getTeamId()).getName());
         history.setStartedOnTeam(OffsetDateTime.now(ZoneOffset.UTC));
         memberHistoryRepository.save(history);
     }

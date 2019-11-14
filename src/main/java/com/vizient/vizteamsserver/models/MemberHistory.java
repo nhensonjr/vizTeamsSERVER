@@ -28,6 +28,8 @@ public class MemberHistory {
 
     private Long teamId;
 
+    private String teamName;
+
     private OffsetDateTime startedOnTeam;
 
     private OffsetDateTime leftTeam;
