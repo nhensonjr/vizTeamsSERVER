@@ -6,11 +6,9 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.lang.Nullable;
 
-import javax.persistence.Convert;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.OffsetDateTime;
 
 @Entity
@@ -22,17 +20,15 @@ import java.time.OffsetDateTime;
 public class MemberHistory {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long id;
 
     private Long memberId;
 
     private Long teamId;
 
-    @Convert(converter = OffsetDateTimeConverter.class)
     private OffsetDateTime startedOnTeam;
 
-    @Convert(converter = OffsetDateTimeConverter.class)
     private OffsetDateTime leftTeam;
 
 }

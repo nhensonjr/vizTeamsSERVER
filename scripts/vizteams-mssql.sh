@@ -1,18 +1,19 @@
 #!/usr/bin/env bash
 
-docker stop vizteams
-docker rm vizteams
+docker stop vizteams-pg
+docker rm vizteams-pg
 
 docker run \
     -e 'ACCEPT_EULA=Y' \
-    -e 'SA_PASSWORD=password1E!' \
-    -p 1437:1433 \
-    --name vizteams \
+    -e 'POSTGRES_PASSWORD=password1E!' \
+    -e 'POSTGRES_DB=dfkv4ejekt9ers' \
+    -p 5432:5432 \
+    --name vizteams-pg \
     -d \
     --restart unless-stopped \
-    mcr.microsoft.com/mssql/server:2017-latest-ubuntu
+    postgres
 
 sleep 15
-docker cp vizteamssetup.sql vizteams:/vizteamssetup.sql
+docker cp vizteamssetup.sql vizteams-pg:/vizteamssetup.sql
 sleep 15
-winpty docker exec -it vizteams sh -c "./opt/mssql-tools/bin/sqlcmd -s localhost -U SA -P password1E! -i vizteamssetup.sql"
+winpty docker exec -it vizteams-pg sh -c "psql -h localhost -U postgres -f vizteamssetup.sql"

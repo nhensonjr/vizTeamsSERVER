@@ -38,6 +38,7 @@ dependencies {
     compileOnly 'org.projectlombok:lombok'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
     compile 'com.microsoft.sqlserver:mssql-jdbc'
+    implementation('org.postgresql:postgresql')
     annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
@@ -47,9 +48,9 @@ dependencies {
 
 
 flyway {
-    url = 'jdbc:sqlserver://localhost:1437;database=vizteams-local'
+    url = 'jdbc:postgresql://localhost5432/dfkv4ejekt9ers'
     locations = ["filesystem:src/main/resources"]
-    driver = 'com.microsoft.sqlserver.jdbc.SQLServerDriver'
+    driver = 'org.postgres.Driver'
     user = 'vizteamsuser'
     password = '7eTasP2BrAFE5usa'
 }
