@@ -29,6 +29,8 @@ public class MemberHistory {
     private Long teamId;
 
     private String teamName;
+    
+    private String memberName;
 
     private OffsetDateTime startedOnTeam;
 

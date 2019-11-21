@@ -35,6 +35,7 @@ public class MemberHistoryService {
         history.setTeamId(member.getTeamId());
         history.setTeamName(teamRepository.getOne(member.getTeamId()).getName());
         history.setStartedOnTeam(OffsetDateTime.now(ZoneOffset.UTC));
+        history.setMemberName(member.getFirstName() + " " + member.getLastName());
         memberHistoryRepository.save(history);
     }
 
